@@ -1,0 +1,23 @@
+{
+  "name": "audiobookfeed.js",
+  "version": "1.0.0",
+  "description": "Generated an rss feed of your audio books so that you can use the podcast player on your phone to listen to them",
+  "main": "audobookfeed.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andwin/audiobooks.js.git"
+  },
+  "keywords": [
+    "audiobooks",
+    "rss"
+  ],
+  "author": "Anders",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andwin/audiobooks.js/issues"
+  },
+  "homepage": "https://github.com/andwin/audiobooks.js"
+}
