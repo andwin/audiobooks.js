@@ -3,21 +3,34 @@
 var express = require('express'),
     app = express(),
     path = require('path'),
-    fs = require('fs');
+    fs = require('fs'),
+    RSS = require('rss');
 
 app.set('port', process.env.PORT || 3000);
 app.set('audiobooks_dir', process.env.AUDIOBOOKS_DIR || 'audiobooks');
 
+var getFileUrl = function(req, file) {
+  return req.protocol + "://" + req.get('host') + '/' + app.get('audiobooks_dir') + '/' + file;
+};
+
 app.get('/', function(req, res) {
   fs.readdir(app.get('audiobooks_dir'), function(err, files) {
-    var str = '';
+    var feed = new RSS({
+      title: 'audiobooks',
+    });
+
     files.forEach(function(file) {
       if(path.extname(file) === '.mp3') {
-        str += file + '\n';
+        feed.item({
+          title: path.basename(file, '.mp3'),
+          url: getFileUrl(req, file),
+          date: fs.statSync(app.get('audiobooks_dir') + '/' + file).mtime,
+        });
       }
     });
 
-    res.send(str);
+    var xml = feed.xml({indent: '  '});
+    res.send(xml);
   });
 })
 
