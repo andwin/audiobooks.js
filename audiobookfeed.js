@@ -15,6 +15,10 @@ var getFileUrl = function(req, file) {
   return req.protocol + "://" + req.get('host') + '/audiobooks/' + file;
 };
 
+var getFilePath = function(file) {
+  return app.get('audiobooks_dir') + '/' + file;
+};
+
 app.get('/', function(req, res) {
   fs.readdir(app.get('audiobooks_dir'), function(err, files) {
     var feed = new RSS({
@@ -28,9 +32,9 @@ app.get('/', function(req, res) {
           url: getFileUrl(req, file),
           enclosure: {
             url: getFileUrl(req, file),
-            file: app.get('audiobooks_dir') + '/' + file
+            file: getFilePath(file),
           },
-          date: fs.statSync(app.get('audiobooks_dir') + '/' + file).mtime,
+          date: fs.statSync(getFilePath(file)).mtime,
         });
       }
     });
