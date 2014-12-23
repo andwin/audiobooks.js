@@ -26,6 +26,10 @@ app.get('/', function(req, res) {
         feed.item({
           title: path.basename(file, '.mp3'),
           url: getFileUrl(req, file),
+          enclosure: {
+            url: getFileUrl(req, file),
+            file: app.get('audiobooks_dir') + '/' + file
+          },
           date: fs.statSync(app.get('audiobooks_dir') + '/' + file).mtime,
         });
       }
