@@ -7,10 +7,12 @@ var express = require('express'),
     RSS = require('rss');
 
 app.set('port', process.env.PORT || 3000);
-app.set('audiobooks_dir', process.env.AUDIOBOOKS_DIR || 'audiobooks');
+app.set('audiobooks_dir', process.env.AUDIOBOOKS_DIR || __dirname + '/audiobooks');
+
+app.use('/audiobooks', express.static(app.get('audiobooks_dir')));
 
 var getFileUrl = function(req, file) {
-  return req.protocol + "://" + req.get('host') + '/' + app.get('audiobooks_dir') + '/' + file;
+  return req.protocol + "://" + req.get('host') + '/audiobooks/' + file;
 };
 
 app.get('/', function(req, res) {
